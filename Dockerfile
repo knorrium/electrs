@@ -8,6 +8,11 @@ RUN apt install -qy librocksdb-dev curl
 FROM base as build
 
 RUN apt install -qy git clang cmake
+
+ENV RUSTUP_HOME=/rust
+ENV CARGO_HOME=/cargo 
+ENV PATH=/cargo/bin:/rust/bin:$PATH
+
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
 
 WORKDIR /build
