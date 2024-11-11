@@ -7,12 +7,13 @@ RUN apt install -qy librocksdb-dev
 
 FROM base as build
 
-RUN apt install -qy git cargo clang cmake
+RUN apt install -qy git clang cmake
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
 
 WORKDIR /build
 COPY . .
 
-RUN cargo build --release --bin electrs
+RUN cargo +nightly build --release -Z sparse-registry --bin electrs
 
 FROM base as deploy
 
