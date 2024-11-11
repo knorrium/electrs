@@ -3,7 +3,7 @@ FROM debian:bookworm-slim AS base
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 RUN apt update -qy
-RUN apt install -qy librocksdb-dev
+RUN apt install -qy librocksdb-dev curl
 
 FROM base as build
 
