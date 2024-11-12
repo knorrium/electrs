@@ -1,21 +1,11 @@
-FROM debian:latest AS base
+FROM rust:1.82-slim-bookworm AS base
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 
-RUN apt update -qy && \
-    apt install -qy librocksdb-dev curl
-
 FROM base as build
 
-RUN apt install -qy git clang cmake
-
-ENV RUSTUP_HOME=/rust
-ENV CARGO_HOME=/cargo 
-ENV PATH=/cargo/bin:/rust/bin:$PATH
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
 WORKDIR /build
+
 COPY . .
 
 RUN cargo build --release --bin electrs
